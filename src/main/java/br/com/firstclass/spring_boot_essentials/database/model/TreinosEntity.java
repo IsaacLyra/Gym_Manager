@@ -1,0 +1,44 @@
+package br.com.firstclass.spring_boot_essentials.database.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "treinos")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
+
+public class TreinosEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false)
+    private String nome;
+
+    @ManyToOne
+    @JoinColumn(name = "aluno_id") // gera uma fk
+    private AlunosEntity aluno;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "treino_exercicios",
+            joinColumns = @JoinColumn(name = "treino_id"),
+            inverseJoinColumns = @JoinColumn(name = "exercicio_id")
+    ) // tabela auxiliar
+
+    private Set<ExerciciosEntity>exercicios = new HashSet<>();
+
+
+
+
+
+}
