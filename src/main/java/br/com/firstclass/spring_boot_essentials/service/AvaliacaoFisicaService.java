@@ -38,13 +38,13 @@ public class AvaliacaoFisicaService {
         avaliacoesFisica = AvaliacoesFisicasEntity.builder()
                 .peso(avaliacaoFisicaDto.getPeso())
                 .altura(avaliacaoFisicaDto.getAltura())
-                .porcentagemGorduraCorporal(BigDecimal.valueOf(avaliacaoFisicaDto.getPercentualGorduraCorporal()))
+                .porcentagemGorduraCorporal(BigDecimal.valueOf(avaliacaoFisicaDto.getPorcetagemGorduraCorporal()))
                 .build();
 
 
 
         aluno.setAvaliacoesFisicas(avaliacoesFisica);
-        alunosRepository.save(aluno);
+        alunosRepository.save(aluno); // salvar aluno e avaliação fisica
     }
 }
 

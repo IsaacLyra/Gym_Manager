@@ -21,7 +21,7 @@ public class AvaliacaoFisicaDto {
     @NotNull
     private BigDecimal altura;
     @NotNull
-    private Integer percentualGorduraCorporal;
+    private Integer porcetagemGorduraCorporal;
 
 
 
