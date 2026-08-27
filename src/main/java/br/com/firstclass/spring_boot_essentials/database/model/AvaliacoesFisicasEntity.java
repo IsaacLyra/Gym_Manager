@@ -1,5 +1,6 @@
 package br.com.firstclass.spring_boot_essentials.database.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.cache.internal.StrategyCreatorRegionFactoryImpl;
@@ -13,7 +14,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Builder
-
+@JsonIgnoreProperties({"hibernateLazyInitializer"}) // Melhor tratar com Join Fetch
 public class AvaliacoesFisicasEntity {
 
     @Id

@@ -25,11 +25,12 @@ public class AlunosEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
-@OneToOne(cascade = CascadeType.ALL) // alterações em cascata
+//O PADRÃO DO OneToOne é EAGER
+@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER) // alterações em cascata  EAGER VS LAZY CARREGAMENTO RAPIDO E CARREGAMENTO LENTO
 @JoinColumn(name = "avaliacao_fisica_id") //nome da fk
 private AvaliacoesFisicasEntity avaliacoesFisicas;
 
-
-@OneToMany(mappedBy = "aluno")
+//O PADRÃO DO OneToMany é LAZY
+@OneToMany(mappedBy = "aluno", fetch = FetchType.LAZY)
 private Set<TreinosEntity> treinos = new HashSet<>();
 }

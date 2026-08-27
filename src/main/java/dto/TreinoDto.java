@@ -1,9 +1,15 @@
 package dto;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.util.List;
+
 //lombok
 @Entity
 @Table(name = "exercicio")
@@ -12,11 +18,18 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class ExercicioDto {
+public class TreinoDto {
 
-    @NotBlank // NULA E NEM VAZIA
+    @NotNull // NULA E NEM VAZIA
+    private Integer alunoId;
+    @NotNull
     private String nome;
-    @NotBlank
-    private String grupoMuscular;
+    @NotEmpty //Impossível criar um treino sem exercicios
+    private List<Integer> exerciciosIds;
+
+
+
+
+
 
 }
