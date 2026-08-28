@@ -9,8 +9,11 @@ import br.com.firstclass.spring_boot_essentials.database.repository.IExerciciosR
 import br.com.firstclass.spring_boot_essentials.exception.BadRequestException;
 import br.com.firstclass.spring_boot_essentials.exception.NotFoundException;
 import dto.AvaliacaoFisicaDto;
+import dto.AvaliacoesFisicasProjection;
 import dto.ExercicioDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -46,5 +49,16 @@ public class AvaliacaoFisicaService {
         aluno.setAvaliacoesFisicas(avaliacoesFisica);
         alunosRepository.save(aluno); // salvar aluno e avaliação fisica
     }
+
+    public List<AvaliacoesFisicasProjection> getAllAvaliacoes(){
+        return  avaliacoesFisicasRepository.getAllAvaliacoes();
+    }
+
+    public Page<AvaliacoesFisicasProjection> getAllAvaliacoesPageable(Integer page, Integer size){
+        return  avaliacoesFisicasRepository.getAllAvaliacoesPageable(PageRequest.of(page, size));
+    }
+
+
+
 }
 
