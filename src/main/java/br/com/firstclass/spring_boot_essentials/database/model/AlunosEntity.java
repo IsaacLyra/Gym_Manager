@@ -2,6 +2,7 @@ package br.com.firstclass.spring_boot_essentials.database.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.engine.internal.Cascade;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -26,7 +27,7 @@ public class AlunosEntity {
     private String email;
 
 //O PADRÃO DO OneToOne é EAGER
-@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER) // alterações em cascata  EAGER VS LAZY CARREGAMENTO RAPIDO E CARREGAMENTO LENTO
+@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE} ,fetch = FetchType.EAGER) // alterações em cascata  EAGER VS LAZY CARREGAMENTO RAPIDO E CARREGAMENTO LENTO
 @JoinColumn(name = "avaliacao_fisica_id") //nome da fk
 private AvaliacoesFisicasEntity avaliacoesFisicas;
 
