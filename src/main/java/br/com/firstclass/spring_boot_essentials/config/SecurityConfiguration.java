@@ -26,7 +26,6 @@ public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
-
     public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
         return http
                 .csrf((AbstractHttpConfigurer::disable)) // segurança em aplicações que guardam estado de sessão
@@ -49,7 +48,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public Object AuthenticationManager(AuthenticationConfiguration authenticationConfiguration){
+    public AuthenticationManager AuthenticationManager(AuthenticationConfiguration authenticationConfiguration){
         return authenticationConfiguration.getAuthenticationManager();
     }
 
