@@ -6,7 +6,7 @@ spring:
     name: spring-boot-essentials-jpa
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/gym
+    url: jdbc:postgresql://localhost:5432/gym_security
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
 
@@ -17,8 +17,14 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
 logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.orm.jdbc.bind: TRACE
+
+
+jwt:
+  expiration: ${JWT_EXPIRATION:900000}
+  key: '${JWT_KEY:dffNPvP8VxF&Iiww1TZ5jw7nw4qY787U3!CL5V_F-QihcUaASDcpi5a$Ru-F4EGmuqn4i4TQGRpG68fhfFyHNO37Jc56GWaaGdP7uYTVRHYvKQGnH2vo!P_tXOKO827slTDuovP6x5!Ucesq#lfU7Ns6YVF7Xi6bfYV__$zBQj$yz6uJ6#fZ8&jUsafEpdRMiPq4yxrkU&en71GQ031CSDzcCt$G4y-=QL!mFvRs=JaCju9UKV3Bi2gVOXBkpbwA$$D5fqI5ufuzmXrMEv=&Zne=oX$GVaspArIgj0E7ehzg!Mh2vAXr$YAEWVQ8O6s9LQM0&ntVUu7iK&Is#a7NrwNX}'
