@@ -20,7 +20,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private TokenProvider tokenProvider;
+    private final TokenProvider tokenProvider;
     private final UserDetailsService userDetailsService; // interface que extrai username
 
     @Override
@@ -28,8 +28,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @Nullable   HttpServletResponse response,
                                     @Nullable   FilterChain filterChain) throws ServletException, IOException {
 
-        String autozirationHeader = request.getHeader("Autorization");
-        if(StringUtils.hasText(autozirationHeader) && autozirationHeader.startsWith("Bearer")){
+        String autozirationHeader = request.getHeader("Authorization");
+        if(StringUtils.hasText(autozirationHeader) && autozirationHeader.startsWith("Bearer ")){
             // validação
             String token = autozirationHeader.substring(7);
 
@@ -44,7 +44,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         }
 
-        filterChain.doFilter(request, response);
+         filterChain.doFilter(request, response);
 
+    }
+
+    @Override
+        protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException{
+        return request.getRequestURI().startsWith("/v1/auth/");
     }
 }

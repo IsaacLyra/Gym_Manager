@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("v1/auth")
+@RequestMapping("/v1/auth")
 public class AuthController {
 
     private final AuthenticationService authenticationService;
@@ -26,7 +26,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public  void register(@RequestBody  @Valid LoginRequestDto loginRequestDto) throws Exception {
+    public  void login(@RequestBody  @Valid LoginRequestDto loginRequestDto) throws Exception {
         authenticationService.login(loginRequestDto);
 
 
