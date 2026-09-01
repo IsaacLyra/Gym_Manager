@@ -1,5 +1,6 @@
 package br.com.firstclass.spring_boot_essentials.config;
 
+import dto.TokenResponseDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -15,24 +16,24 @@ import java.util.Date;
 @Component
 public class TokenProvider {
 
-    @Value("${jwt.expiration}")
-    private Long expirationTime;
-
+    @Value("${jwt.expiration:900000}")
+    private Long expirationTime = 900000L;
 
     @Value("${jwt.key}")
     private String key;
 
-    // Gerar um token
 
-    public String gerarToken(Authentication authentication){
+    public TokenResponseDto gerarToken(Authentication authentication){
        UserDetails user = (UserDetails)authentication.getPrincipal(); //Salvar todo o objeto do user
-        return buildToken(user.getUsername());
+        String token = buildToken(user.getUsername()); // ADICIONADO
 
+        return new TokenResponseDto(token, expirationTime);
     }
 
     private String buildToken(String username){
         Date now = new Date();
-        Date expiration = new Date(now.getTime() + expirationTime);
+        long exp = (expirationTime != null) ? expirationTime : 900000L;
+        Date expiration = new Date(now.getTime() + exp);
 
         return Jwts.builder()
                 .subject(username)
@@ -44,7 +45,7 @@ public class TokenProvider {
 
     private SecretKey getSigningKey(){
         byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
-        return Keys.hmacShaKeyFor(key.getBytes());
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     // Validar um token

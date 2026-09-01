@@ -7,8 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 //lombok
-@Entity
-@Table(name = "exercicio")
+
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -16,11 +16,9 @@ import lombok.*;
 @Builder
 public class LoginRequestDto {
 
-    @NotBlank // NULA E NEM VAZIA
-    private String nome;
-    @NotBlank
+    @NotBlank(message = "O email não pode estar em branco")
     private String email;
-    @NotBlank
+    @NotBlank(message = "A senha não pode estar em branco")
     private String senha;
 
 }

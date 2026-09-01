@@ -11,9 +11,7 @@ import dto.LoginRequestDto;
 import dto.RegisterRequestDto;
 import dto.TokenResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +28,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
-    private Long expirationTime;
+
 
 
     public void Register(RegisterRequestDto dto) throws BadRequestException {
@@ -43,9 +41,9 @@ public class AuthenticationService {
             throw new BadRequestException("Aluno já cadastrado com este email");
         }
 
-        RolesEntity role = rolesRepository.findByNome(RoleTypeEnum.ALUNO.name())
+        RolesEntity role = rolesRepository.findByNome(RoleTypeEnum.ROLE_ALUNO.name())
                         .orElseGet(() -> rolesRepository.save(RolesEntity.builder()
-                                        .nome(RoleTypeEnum.ALUNO.name())
+                                        .nome(RoleTypeEnum.ROLE_ALUNO.name())
                                 .build()));
 
         alunosRepository.save(AlunosEntity.builder()
@@ -60,18 +58,14 @@ public class AuthenticationService {
 
     public TokenResponseDto login (LoginRequestDto dto) throws Exception{
 
-        try{
-           Authentication authentication =  authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getSenha()));
-            String token = tokenProvider.gerarToken(authentication);
-            //authentication provider -> userdetailservice -> passwordEnconder.matches(): comparar senha passsada por dto com a senha que esta no banco de dados
-        return new TokenResponseDto(token, expirationTime);
-        }
-        catch (BadCredentialsException e){
-            throw new BadRequestException("Credenciais inválidas: ");
-        }
-        catch (Exception e){
-            throw e;
-        }
+        UsernamePasswordAuthenticationToken authToken =
+                new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getSenha());
+
+        Authentication authentication = authenticationManager.authenticate(authToken);
+
+        return tokenProvider.gerarToken(authentication);
+
+
     }
 
 }
