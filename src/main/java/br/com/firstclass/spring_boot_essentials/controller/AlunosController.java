@@ -11,6 +11,7 @@ import dto.ExercicioDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,7 @@ public class AlunosController {
         alunosService.criarAluno(alunosDto);
     }
 
+    @PreAuthorize("#alunoId == authentication.principal.id")
     @GetMapping("/{alunoId}/avaliacao")
 
     public AvaliacoesFisicasEntity getAvaliacoesFiscas(@PathVariable Integer alunoId) throws NotFoundException {
