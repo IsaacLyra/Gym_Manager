@@ -32,7 +32,7 @@ public class AlunosController {
         alunosService.criarAluno(alunosDto);
     }
 
-    @PreAuthorize("#alunoId == authentication.principal.id")
+    @PreAuthorize("#alunoId == authentication.principal.id")//Access Denied exceção
     @GetMapping("/{alunoId}/avaliacao")
 
     public AvaliacoesFisicasEntity getAvaliacoesFiscas(@PathVariable Integer alunoId) throws NotFoundException {
